@@ -1,4 +1,5 @@
 use clap::Parser;
+use colored::Colorize;
 
 #[derive(Parser)]
 struct Cli {
@@ -13,7 +14,14 @@ fn main() {
 
     for line in content.lines() {
         if line.contains(&args.pattern) {
-            println!("{}", line);
+            let mut parts = line.split(&args.pattern).peekable();
+            while let Some(part) = parts.next() {
+                print!("{}", part,);
+                if parts.peek() != None {
+                    print!("{}", args.pattern.red());
+                }
+            }
+            println!();
         }
     }
 }
